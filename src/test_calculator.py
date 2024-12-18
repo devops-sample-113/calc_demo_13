@@ -26,6 +26,7 @@ class TestCalculator(unittest.TestCase):
         result = self.calculator.calculate(10, 0, "div")
         self.assertEqual(result, "Error: Can not divide by zero!")
 
+
     def test_invalid_operator(self):
         result = self.calculator.calculate(10, 5, "unknown")
         self.assertEqual(result, "Invalid operator")

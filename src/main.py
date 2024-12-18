@@ -106,6 +106,22 @@ class CalculatorApp(ft.Container):
                             text="=", button_clicked=self.button_clicked, action="calculate"),
                     ]
                 ),
+                ft.Row(
+                expand=True,
+                controls=[
+                    ActionButton(
+                        text="√", button_clicked=self.button_clicked, action="sqrt"),
+                    ActionButton(
+                        text="log", button_clicked=self.button_clicked, action="log"),
+                    ActionButton(
+                        text="| |", button_clicked=self.button_clicked, action="| |"),
+                    ActionButton(
+                        text="π", button_clicked=self.button_clicked, action="pi"),
+                    ActionButton(
+                        text="^2", button_clicked=self.button_clicked, action="pow"),    
+                    ]
+                    
+                )
             ]
         )
         return ui
@@ -172,6 +188,58 @@ class CalculatorApp(ft.Container):
                 )
             )
             self.reset()
+        elif action == "backspace":
+        # Handle backspace (delete last character)
+            if self.result.value != "0":
+                self.result.value = self.result.value[:-1]  # Remove last character
+                if self.result.value == "":  # If nothing remains, reset to "0"
+                    self.result.value = "0"
+            else:
+                pass
+        elif action == "sqrt":
+        # Handle square root operation
+            try:
+                num = float(self.result.value)
+                if num >= 0:
+                    self.result.value = str(self.format_number(num ** 0.5))  # Square root
+                else:
+                    self.result.value = "Error"  # Negative numbers can't have real square roots
+            except ValueError:
+                self.result.value = "Error"
+        elif action == "log":
+        # Handle logarithm operation (base 10)
+            try:
+                num = float(self.result.value)
+                if num > 0:
+                    import math
+                    self.result.value = str(self.format_number(math.log10(num)))  # Logarithm base 10
+                else:
+                    self.result.value = "Error"  # Logarithm of non-positive numbers is not defined
+            except ValueError:
+                self.result.value = "Error"
+        elif action == "| |":
+        # Handle logarithm operation (base 10)
+            try:
+                
+                num = float(self.result.value)
+                
+                if (num < 0):
+                    num *= (-1)
+                    
+                self.result.value = str(self.format_number(num))
+                print(self.result.value)
+            except ValueError:
+                self.result.value = "Error"
+        elif action == "pi":
+        # Handle pi button
+            self.result.value = str(self.format_number(3.141592653589793))
+        elif action == "pow":
+        # Handle squaring (x^2)
+            try:
+                num = float(self.result.value)
+                self.result.value = str(self.format_number(num ** 2))  # Calculate square of the number
+            except ValueError:
+                self.result.value = "Error"  # Handle invalid input
         else:
             raise ValueError("Invalid action")
 
